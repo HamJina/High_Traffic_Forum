@@ -1,5 +1,6 @@
 package high.traffic.forum.article.api;
 
+import high.traffic.forum.article.service.response.ArticlePageResponse;
 import high.traffic.forum.article.service.response.ArticleResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,6 +51,19 @@ public class ArticleApiTest {
         restClient.delete()
                 .uri("/v1/articles/{articleId}", 192505931206737920L)
                 .retrieve();
+    }
+
+    @Test
+    void readAllTest() {
+        ArticlePageResponse response = restClient.get()
+                .uri("/v1/articles?boardId=1&pageSize=30&page=1")
+                .retrieve()
+                .body(ArticlePageResponse.class);
+
+        System.out.println("response.getArticleCount() = " + response.getArticleCount());
+        for (ArticleResponse article : response.getArticles()) {
+            System.out.println("articleId = " + article.getArticleId());
+        }
     }
 
     ArticleResponse create(ArticleCreateRequest request) {
