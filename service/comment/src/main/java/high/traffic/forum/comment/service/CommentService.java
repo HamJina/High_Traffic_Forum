@@ -16,7 +16,7 @@ import static java.util.function.Predicate.not;
 public class CommentService {
     private final Snowflake snowflake = new Snowflake();
     private final CommentRepository commentRepository;
-    
+
     @Transactional
     public CommentResponse create(CommentCreateRequest request) {
         Comment parent = findParent(request);
@@ -34,12 +34,12 @@ public class CommentService {
 
     private Comment findParent(CommentCreateRequest request) {
         Long parentCommentId = request.getParentCommentId();
-        if(parentCommentId == null) {
+        if ( parentCommentId == null) {
             return null;
         }
         return commentRepository.findById(parentCommentId)
-                .filter(not(Comment::getDeleted)) // 상위 댓글이 삭제된 상태가 아님
-                .filter(Comment::isRoot) // 댓글은 상위 댓글이어야 함
+                .filter(not(Comment::getDeleted))
+                .filter(Comment::isRoot)
                 .orElseThrow();
     }
 
@@ -54,10 +54,10 @@ public class CommentService {
         commentRepository.findById(commentId)
                 .filter(not(Comment::getDeleted))
                 .ifPresent(comment -> {
-                    if (hasChildren(comment)) { // 자식있으면 삭제 표시만
+                    if (hasChildren(comment)) {
                         comment.delete();
                     } else {
-                        delete(comment); // 자식 없으면 해당 댓글 삭제
+                        delete(comment);
                     }
                 });
     }
@@ -68,7 +68,7 @@ public class CommentService {
 
     private void delete(Comment comment) {
         commentRepository.delete(comment);
-        if (!comment.isRoot()) { // 하위 댓글이 삭제되었다면 상위 댓글도 재귀적 삭제
+        if (!comment.isRoot()) {
             commentRepository.findById(comment.getParentCommentId())
                     .filter(Comment::getDeleted)
                     .filter(not(this::hasChildren))

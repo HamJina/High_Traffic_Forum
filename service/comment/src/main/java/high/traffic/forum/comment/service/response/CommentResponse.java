@@ -1,9 +1,11 @@
 package high.traffic.forum.comment.service.response;
 
 import high.traffic.forum.comment.entity.Comment;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
 public class CommentResponse {
     private Long commentId;
     private String content;
@@ -21,7 +23,7 @@ public class CommentResponse {
         response.articleId = comment.getArticleId();
         response.writerId = comment.getWriterId();
         response.deleted = comment.getDeleted();
-        response.createAt = comment.getCreateAt();
+        response.createAt = comment.getCreatedAt();
         return response;
     }
 }

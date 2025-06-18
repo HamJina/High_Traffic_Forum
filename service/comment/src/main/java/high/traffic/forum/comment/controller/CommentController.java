@@ -23,7 +23,7 @@ public class CommentController {
         return commentService.create(request);
     }
 
-    @DeleteMapping("/vi/comments/{commentId}")
+    @DeleteMapping("/v1/comments/{commentId}")
     public void delete(@PathVariable Long commentId) {
         commentService.delete(commentId);
     }

@@ -1,7 +1,7 @@
-package high.traffic.forum.article.data;
+package high.traffic.forum.comment.data;
 
-import high.traffic.forum.article.entity.Article;
-import high.traffic.forum.article.repository.ArticleRepository;
+
+import high.traffic.forum.comment.entity.Comment;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import kuke.board.common.snowflake.Snowflake;
@@ -43,15 +43,17 @@ public class DataInitializer {
 
     void insert() {
         transactionTemplate.executeWithoutResult(status -> {
+            Comment prev = null;
             for(int i = 0; i < BULK_INSERT_SIZE; i++) {
-                Article article = Article.create(
+                Comment comment = Comment.create(
                         snowflake.nextId(),
-                        "title" + i,
-                        "content" + i,
+                        "content",
+                        i % 2 == 0 ? null : prev.getCommentId(),
                         1L,
                         1L
                 );
-                entityManager.persist(article);
+                prev = comment;
+                entityManager.persist(comment);
             }
         });
     }

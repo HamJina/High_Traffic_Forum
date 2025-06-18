@@ -4,12 +4,12 @@ spring:
     name: high-traffic-forum-comment-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/comment
+    url: jdbc:mysql://localhost:3306/article
     username: root
     password: root
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: false
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: none
