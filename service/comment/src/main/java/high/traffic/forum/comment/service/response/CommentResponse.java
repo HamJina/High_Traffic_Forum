@@ -1,6 +1,7 @@
 package high.traffic.forum.comment.service.response;
 
 import high.traffic.forum.comment.entity.Comment;
+import high.traffic.forum.comment.entity.CommentV2;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -10,10 +11,11 @@ public class CommentResponse {
     private Long commentId;
     private String content;
     private Long parentCommentId;
-    private Long articleId; // shard key
+    private Long articleId;
     private Long writerId;
     private Boolean deleted;
-    private LocalDateTime createAt;
+    private String path;
+    private LocalDateTime createdAt;
 
     public static CommentResponse from(Comment comment) {
         CommentResponse response = new CommentResponse();
@@ -23,7 +25,19 @@ public class CommentResponse {
         response.articleId = comment.getArticleId();
         response.writerId = comment.getWriterId();
         response.deleted = comment.getDeleted();
-        response.createAt = comment.getCreatedAt();
+        response.createdAt = comment.getCreatedAt();
+        return response;
+    }
+
+    public static CommentResponse from(CommentV2 comment) {
+        CommentResponse response = new CommentResponse();
+        response.commentId = comment.getCommentId();
+        response.content = comment.getContent();
+        response.path = comment.getCommentPath().getPath();
+        response.articleId = comment.getArticleId();
+        response.writerId = comment.getWriterId();
+        response.deleted = comment.getDeleted();
+        response.createdAt = comment.getCreatedAt();
         return response;
     }
 }
