@@ -1,8 +1,10 @@
 package high.traffic.forum.comment.service;
 
 
+import high.traffic.forum.comment.entity.ArticleCommentCount;
 import high.traffic.forum.comment.entity.CommentPath;
 import high.traffic.forum.comment.entity.CommentV2;
+import high.traffic.forum.comment.repository.ArticleCommentCountRepository;
 import high.traffic.forum.comment.repository.CommentRepositoryV2;
 import high.traffic.forum.comment.service.request.CommentCreateRequestV2;
 import high.traffic.forum.comment.service.response.CommentPageResponse;
@@ -21,9 +23,9 @@ import static java.util.function.Predicate.not;
 public class CommentServiceV2 {
     private final Snowflake snowflake = new Snowflake();
     private final CommentRepositoryV2 commentRepository;
-    /*private final OutboxEventPublisher outboxEventPublisher;
+    //private final OutboxEventPublisher outboxEventPublisher;
     private final ArticleCommentCountRepository articleCommentCountRepository;
-*/
+
     // 댓글 생성하기
     @Transactional
     public CommentResponse create(CommentCreateRequestV2 request) {
@@ -43,13 +45,13 @@ public class CommentServiceV2 {
                 )
         );
 
-        /*int result = articleCommentCountRepository.increase(request.getArticleId());
+        int result = articleCommentCountRepository.increase(request.getArticleId());
         if (result == 0) {
             articleCommentCountRepository.save(
                     ArticleCommentCount.init(request.getArticleId(), 1L)
             );
         }
-
+/*
         outboxEventPublisher.publish(
                 EventType.COMMENT_CREATED,
                 CommentCreatedEventPayload.builder()
@@ -119,7 +121,7 @@ public class CommentServiceV2 {
 
     private void delete(CommentV2 comment) {
         commentRepository.delete(comment);
-        //articleCommentCountRepository.decrease(comment.getArticleId());
+        articleCommentCountRepository.decrease(comment.getArticleId());
         if (!comment.isRoot()) {
             commentRepository.findByPath(comment.getCommentPath().getParentPath())
                     .filter(CommentV2::getDeleted)
@@ -149,9 +151,9 @@ public class CommentServiceV2 {
                 .toList();
     }
 
-    /*public Long count(Long articleId) {
+    public Long count(Long articleId) {
         return articleCommentCountRepository.findById(articleId)
                 .map(ArticleCommentCount::getCommentCount)
                 .orElse(0L);
-    }*/
+    }
 }

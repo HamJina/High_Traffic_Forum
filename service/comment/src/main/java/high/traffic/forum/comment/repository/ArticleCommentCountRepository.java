@@ -1,6 +1,6 @@
-/*
 package high.traffic.forum.comment.repository;
 
+import high.traffic.forum.comment.entity.ArticleCommentCount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +24,3 @@ public interface ArticleCommentCountRepository extends JpaRepository<ArticleComm
     int decrease(@Param("articleId") Long articleId);
 }
 
-*/

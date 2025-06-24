@@ -10,8 +10,6 @@ import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CommentControllerV2Test {
     RestClient restClient = RestClient.create("http://localhost:9001");
 
