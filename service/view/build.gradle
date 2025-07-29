@@ -1,5 +1,10 @@
-// article 에서만 사용가능한 dependency 설정 가능
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // 데이터 베이스
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation project(':common:snowflake')
 }
