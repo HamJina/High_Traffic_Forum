@@ -20,7 +20,7 @@ public class ArticleController {
         return articleService.read(articleId);
     }
 
-    @GetMapping("/v1/articles")
+    @GetMapping("/v2/articles")
     public ArticlePageResponse readAll(
             @RequestParam("boardId") Long boardId,
             @RequestParam("page") Long page,
