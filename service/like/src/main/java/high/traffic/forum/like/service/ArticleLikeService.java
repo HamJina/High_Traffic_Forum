@@ -6,7 +6,7 @@ import high.traffic.forum.like.repository.ArticleLikeCountRepository;
 import high.traffic.forum.like.repository.ArticleLikeRepository;
 import high.traffic.forum.like.service.response.ArticleLikeResponse;
 import jakarta.transaction.Transactional;
-import kuke.board.common.snowflake.Snowflake;
+import kuke.board.common.event.Snowflake;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

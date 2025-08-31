@@ -6,7 +6,7 @@ import high.traffic.forum.comment.service.request.CommentCreateRequest;
 import high.traffic.forum.comment.service.response.CommentPageResponse;
 import high.traffic.forum.comment.service.response.CommentResponse;
 import jakarta.transaction.Transactional;
-import kuke.board.common.snowflake.Snowflake;
+import kuke.board.common.event.Snowflake;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

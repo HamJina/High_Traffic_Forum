@@ -9,7 +9,7 @@ import high.traffic.forum.comment.repository.CommentRepositoryV2;
 import high.traffic.forum.comment.service.request.CommentCreateRequestV2;
 import high.traffic.forum.comment.service.response.CommentPageResponse;
 import high.traffic.forum.comment.service.response.CommentResponse;
-import kuke.board.common.snowflake.Snowflake;
+import kuke.board.common.event.Snowflake;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
