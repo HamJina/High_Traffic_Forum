@@ -1,6 +1,6 @@
-package kuke.board.common.event.payload;
+package kuke.board.common.outboxmessagerelay.payload;
 
-import kuke.board.common.event.EventPayload;
+import kuke.board.common.outboxmessagerelay.EventPayload;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

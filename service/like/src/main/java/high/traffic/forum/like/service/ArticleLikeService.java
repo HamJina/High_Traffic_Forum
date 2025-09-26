@@ -6,7 +6,11 @@ import high.traffic.forum.like.repository.ArticleLikeCountRepository;
 import high.traffic.forum.like.repository.ArticleLikeRepository;
 import high.traffic.forum.like.service.response.ArticleLikeResponse;
 import jakarta.transaction.Transactional;
-import kuke.board.common.event.Snowflake;
+import kuke.board.common.outboxmessagerelay.EventType;
+import kuke.board.common.outboxmessagerelay.OutboxEventPublisher;
+import kuke.board.common.outboxmessagerelay.Snowflake;
+import kuke.board.common.outboxmessagerelay.payload.ArticleLikedEventPayload;
+import kuke.board.common.outboxmessagerelay.payload.ArticleUnlikedEventPayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +20,30 @@ public class ArticleLikeService {
     private final Snowflake snowflake = new Snowflake();
     private final ArticleLikeRepository articleLikeRepository;
     private final ArticleLikeCountRepository articleLikeCountRepository;
+    private final OutboxEventPublisher outboxEventPublisher;
 
     // 사용자가 게시글에 좋아요를 했는지
     public ArticleLikeResponse read(Long articleId, Long userId) {
         return articleLikeRepository.findByArticleIdAndUserId(articleId, userId)
                 .map(ArticleLikeResponse::from)
                 .orElseThrow();
+    }
+
+    @Transactional
+    public void like(Long articleId, Long userId) {
+        articleLikeRepository.save(
+                ArticleLike.create(
+                        snowflake.nextId(),
+                        articleId,
+                        userId
+                )
+        );
+    }
+
+    @Transactional
+    public void unlike(Long articleId, Long userId) {
+        articleLikeRepository.findByArticleIdAndUserId(articleId, userId)
+                .ifPresent(articleLikeRepository::delete);
     }
 
     /**
@@ -46,6 +68,18 @@ public class ArticleLikeService {
                     ArticleLikeCount.init(articleId, 1L)
             );
         }
+
+        outboxEventPublisher.publish(
+                EventType.ARTICLE_LIKED,
+                ArticleLikedEventPayload.builder()
+                        .articleLikeId(articleLike.getArticleLikeId())
+                        .articleId(articleLike.getArticleId())
+                        .userId(articleLike.getUserId())
+                        .createdAt(articleLike.getCreatedAt())
+                        .articleLikeCount(count(articleLike.getArticleId()))
+                        .build(),
+                articleLike.getArticleId()
+        );
     }
 
     @Transactional
@@ -54,11 +88,22 @@ public class ArticleLikeService {
                 .ifPresent(articleLike -> {
                     articleLikeRepository.delete(articleLike);
                     articleLikeCountRepository.decrease(articleId);
+                    outboxEventPublisher.publish(
+                            EventType.ARTICLE_UNLIKED,
+                            ArticleUnlikedEventPayload.builder()
+                                    .articleLikeId(articleLike.getArticleLikeId())
+                                    .articleId(articleLike.getArticleId())
+                                    .userId(articleLike.getUserId())
+                                    .createdAt(articleLike.getCreatedAt())
+                                    .articleLikeCount(count(articleLike.getArticleId()))
+                                    .build(),
+                            articleLike.getArticleId()
+                    );
                 });
     }
 
     /**
-     * select ... for update + update 비관적 락 - 방법 1 : 조회 데이터 기준
+     * select ... for update + update 비관적 락 - 방법 2 : 조회 데이터 기준
      */
     @Transactional
     public void likePessimisticLock2(Long articleId, Long userId) {
@@ -85,6 +130,7 @@ public class ArticleLikeService {
                 });
     }
 
+    // 낙관적 락
     @Transactional
     public void likeOptimisticLock(Long articleId, Long userId) {
         articleLikeRepository.save(

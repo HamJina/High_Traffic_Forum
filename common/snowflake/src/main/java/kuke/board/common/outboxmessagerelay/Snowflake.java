@@ -1,4 +1,4 @@
-package kuke.board.common.event;
+package kuke.board.common.outboxmessagerelay;
 
 import java.util.random.RandomGenerator;
 

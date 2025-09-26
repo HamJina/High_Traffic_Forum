@@ -18,6 +18,16 @@ public class ArticleLikeController {
         return articleLikeService.read(articleId, userId);
     }
 
+    @PostMapping("/v1/artkcles-likes/articles/{articleId}/users/{userId}")
+    public void like(@PathVariable("articleId") Long articleId, @PathVariable("userId") Long userId) {
+        articleLikeService.like(articleId, userId);
+    }
+
+    @DeleteMapping("/v1/artkcles-likes/articles/{articleId}/users/{userId}")
+    public void unlike(@PathVariable("articleId") Long articleId, @PathVariable("userId") Long userId) {
+        articleLikeService.unlike(articleId, userId);
+    }
+
     @GetMapping("/v1/article-likes/articles/{articleId}/count")
     public Long count(
             @PathVariable("articleId") Long articleId

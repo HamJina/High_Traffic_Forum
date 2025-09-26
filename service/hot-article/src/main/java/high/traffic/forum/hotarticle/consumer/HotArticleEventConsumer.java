@@ -1,9 +1,9 @@
 package high.traffic.forum.hotarticle.consumer;
 
 import high.traffic.forum.hotarticle.service.HotArticleService;
-import kuke.board.common.event.Event;
-import kuke.board.common.event.EventPayload;
-import kuke.board.common.event.EventType;
+import kuke.board.common.outboxmessagerelay.Event;
+import kuke.board.common.outboxmessagerelay.EventPayload;
+import kuke.board.common.outboxmessagerelay.EventType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

@@ -1,7 +1,7 @@
-package kuke.board.common.event;
+package kuke.board.common.outboxmessagerelay;
 
 
-import kuke.board.common.event.payload.*;
+import kuke.board.common.outboxmessagerelay.payload.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

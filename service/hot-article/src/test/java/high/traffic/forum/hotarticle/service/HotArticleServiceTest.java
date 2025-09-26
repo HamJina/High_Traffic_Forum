@@ -1,8 +1,8 @@
 package high.traffic.forum.hotarticle.service;
 
 import high.traffic.forum.hotarticle.service.eventhandler.EventHandler;
-import kuke.board.common.event.Event;
-import kuke.board.common.event.EventType;
+import kuke.board.common.outboxmessagerelay.Event;
+import kuke.board.common.outboxmessagerelay.EventType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

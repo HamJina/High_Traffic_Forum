@@ -1,6 +1,6 @@
-package kuke.board.common.event;
+package kuke.board.common.outboxmessagerelay;
 
-import kuke.board.common.event.payload.ArticleCreatedEventPayload;
+import kuke.board.common.outboxmessagerelay.payload.ArticleCreatedEventPayload;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

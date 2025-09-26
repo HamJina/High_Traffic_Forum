@@ -3,7 +3,7 @@ package high.traffic.forum.hotarticle.service;
 import high.traffic.forum.hotarticle.repository.ArticleCreatedTimeRepository;
 import high.traffic.forum.hotarticle.repository.HotArticleListRepository;
 import high.traffic.forum.hotarticle.service.eventhandler.EventHandler;
-import kuke.board.common.event.Event;
+import kuke.board.common.outboxmessagerelay.Event;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

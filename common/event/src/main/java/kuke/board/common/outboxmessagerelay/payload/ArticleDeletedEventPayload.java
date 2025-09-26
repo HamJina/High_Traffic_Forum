@@ -1,6 +1,6 @@
-package kuke.board.common.event.payload;
+package kuke.board.common.outboxmessagerelay.payload;
 
-import kuke.board.common.event.EventPayload;
+import kuke.board.common.outboxmessagerelay.EventPayload;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleUpdatedEventPayload implements EventPayload {
+public class ArticleDeletedEventPayload implements EventPayload {
     private Long articleId;
     private String title;
     private String content;
@@ -20,5 +20,6 @@ public class ArticleUpdatedEventPayload implements EventPayload {
     private Long writerId;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    private Long boardArticleCount;
 }
 

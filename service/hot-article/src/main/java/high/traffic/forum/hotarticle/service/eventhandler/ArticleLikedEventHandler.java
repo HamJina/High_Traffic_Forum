@@ -2,9 +2,9 @@ package high.traffic.forum.hotarticle.service.eventhandler;
 
 import high.traffic.forum.hotarticle.repository.ArticleLikeCountRepository;
 import high.traffic.forum.hotarticle.utils.TimeCalculatorUtils;
-import kuke.board.common.event.Event;
-import kuke.board.common.event.EventType;
-import kuke.board.common.event.payload.ArticleLikedEventPayload;
+import kuke.board.common.outboxmessagerelay.Event;
+import kuke.board.common.outboxmessagerelay.EventType;
+import kuke.board.common.outboxmessagerelay.payload.ArticleLikedEventPayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -9,7 +9,11 @@ import high.traffic.forum.comment.repository.CommentRepositoryV2;
 import high.traffic.forum.comment.service.request.CommentCreateRequestV2;
 import high.traffic.forum.comment.service.response.CommentPageResponse;
 import high.traffic.forum.comment.service.response.CommentResponse;
-import kuke.board.common.event.Snowflake;
+import kuke.board.common.outboxmessagerelay.EventType;
+import kuke.board.common.outboxmessagerelay.OutboxEventPublisher;
+import kuke.board.common.outboxmessagerelay.Snowflake;
+import kuke.board.common.outboxmessagerelay.payload.CommentCreatedEventPayload;
+import kuke.board.common.outboxmessagerelay.payload.CommentDeletedEventPayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +27,7 @@ import static java.util.function.Predicate.not;
 public class CommentServiceV2 {
     private final Snowflake snowflake = new Snowflake();
     private final CommentRepositoryV2 commentRepository;
-    //private final OutboxEventPublisher outboxEventPublisher;
+    private final OutboxEventPublisher outboxEventPublisher;
     private final ArticleCommentCountRepository articleCommentCountRepository;
 
     // 댓글 생성하기
@@ -51,7 +55,7 @@ public class CommentServiceV2 {
                     ArticleCommentCount.init(request.getArticleId(), 1L)
             );
         }
-/*
+
         outboxEventPublisher.publish(
                 EventType.COMMENT_CREATED,
                 CommentCreatedEventPayload.builder()
@@ -64,7 +68,7 @@ public class CommentServiceV2 {
                         .articleCommentCount(count(comment.getArticleId()))
                         .build(),
                 comment.getArticleId()
-        );*/
+        );
 
         return CommentResponse.from(comment);
     }
@@ -96,7 +100,7 @@ public class CommentServiceV2 {
                         delete(comment); // 자손이 없으면 실제로 댓글 삭제하기
                     }
 
-                   /* outboxEventPublisher.publish(
+                   outboxEventPublisher.publish(
                             EventType.COMMENT_DELETED,
                             CommentDeletedEventPayload.builder()
                                     .commentId(comment.getCommentId())
@@ -108,7 +112,7 @@ public class CommentServiceV2 {
                                     .articleCommentCount(count(comment.getArticleId()))
                                     .build(),
                             comment.getArticleId()
-                    );*/
+                    );
                 });
     }
 

@@ -5,7 +5,7 @@ import high.traffic.forum.comment.entity.CommentPath;
 import high.traffic.forum.comment.entity.CommentV2;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import kuke.board.common.event.Snowflake;
+import kuke.board.common.outboxmessagerelay.Snowflake;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package kuke.board.common.event;
+package kuke.board.common.outboxmessagerelay;
 
 import static org.assertj.core.api.Assertions.*;
 

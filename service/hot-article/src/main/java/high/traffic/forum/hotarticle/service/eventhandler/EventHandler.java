@@ -1,6 +1,6 @@
 package high.traffic.forum.hotarticle.service.eventhandler;
-import kuke.board.common.event.Event;
-import kuke.board.common.event.EventPayload;
+import kuke.board.common.outboxmessagerelay.Event;
+import kuke.board.common.outboxmessagerelay.EventPayload;
 
 public interface EventHandler<T extends EventPayload> {
     void handle(Event<T> event);

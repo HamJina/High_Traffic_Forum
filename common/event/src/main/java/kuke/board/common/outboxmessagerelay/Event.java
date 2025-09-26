@@ -1,4 +1,4 @@
-package kuke.board.common.event;
+package kuke.board.common.outboxmessagerelay;
 
 // 이벤트 통신을 위한 클래스
 import kuke.board.common.dataserializer.DataSerializer;
